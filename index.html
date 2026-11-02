@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Xác định hướng đi sau tốt nghiệp THPT</title>
+<style>
+:root{--ink:#2b1b4d;--cream:#fff7ea;--coral:#ff5a5f;--sun:#ffc933;--teal:#00b8a9;--blue:#3a7bff;--violet:#7c4dff;--mute:#6d6384}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#120a26;overflow:hidden;font-family:"Segoe UI","Be Vietnam Pro",Arial,sans-serif;color:var(--ink)}
+#stage{position:absolute;left:50%;top:50%;width:1280px;height:720px;transform-origin:center}
+.slide{position:absolute;inset:0;background:var(--cream);padding:48px 64px;display:none;overflow:hidden}
+.slide.active{display:block;animation:in .5s cubic-bezier(.2,.8,.2,1)}
+@keyframes in{from{opacity:0;transform:scale(.97) translateY(14px)}to{opacity:1;transform:none}}
+.slide::before{content:"";position:absolute;right:-90px;top:-90px;width:300px;height:300px;border-radius:50%;background:var(--sun);opacity:.35;pointer-events:none}
+.slide::after{content:"";position:absolute;left:-70px;bottom:-110px;width:260px;height:260px;border-radius:50%;background:var(--teal);opacity:.22;pointer-events:none}
+.slide>*{position:relative;z-index:1}
+.dark{background:linear-gradient(140deg,#24104f,#4a1d8f 60%,#7c2fbf);color:#fff}
+.dark::before{background:var(--coral);opacity:.3}
+.dark::after{background:var(--sun);opacity:.18}
+.kicker{display:inline-block;background:var(--ink);color:var(--sun);font-weight:800;font-size:17px;letter-spacing:.1em;text-transform:uppercase;padding:7px 18px;border-radius:30px}
+.dark .kicker{background:var(--sun);color:var(--ink)}
+h2{font-size:42px;font-weight:900;line-height:1.15;margin:12px 0 4px}
+h2 em{font-style:normal;color:var(--coral)}
+.dark h2 em{color:var(--sun)}
+.sub{font-size:23px;color:var(--mute);margin-bottom:14px}
+.dark .sub{color:#d8c9ff}
+.photo{background-size:cover;background-position:center;border-radius:22px;box-shadow:0 14px 36px #2b1b4d44;background-color:#d7cdf0}
+.row{display:flex;gap:30px;align-items:stretch}
+.row>*{flex:1}
+.fill{height:calc(100% - 118px)}
+p,li{font-size:25px;line-height:1.45}
+ul{list-style:none}
+li{padding-left:36px;position:relative;margin-bottom:10px}
+li::before{content:"★";position:absolute;left:0;color:var(--coral)}
+.dark li::before{color:var(--sun)}
+.btn{font:inherit;font-weight:800;border:0;border-radius:40px;padding:12px 26px;font-size:20px;cursor:pointer;background:var(--coral);color:#fff;box-shadow:0 5px 0 #b83a3e;transition:.15s}
+.btn:active{transform:translateY(4px);box-shadow:0 1px 0 #b83a3e}
+.hint{font-size:17px;color:var(--mute);font-style:italic}
+.dark .hint{color:#cdbcf5}
+
+/* flip cards */
+.cards{display:flex;gap:18px;height:360px;margin-top:20px}
+.flip{flex:1;perspective:900px;cursor:pointer}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .7s;transform-style:preserve-3d}
+.flip.on .in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;border-radius:22px;backface-visibility:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden}
+.front{background:linear-gradient(160deg,var(--sun),#ff9a3d);color:var(--ink);font-size:110px;font-weight:900;box-shadow:0 10px 0 #c97a1c}
+.front small{font-size:21px;font-weight:700;margin-top:4px}
+.back{transform:rotateY(180deg);background-size:cover;background-position:center;justify-content:flex-end;box-shadow:0 12px 28px #0006}
+.back b{width:100%;text-align:center;font-size:31px;padding:34px 8px 14px;color:#fff;background:linear-gradient(transparent,#1a0b3acc 70%)}
+
+/* timer */
+#timer{position:fixed;left:18px;bottom:14px;z-index:20;display:none;align-items:center;gap:10px;background:#120a26cc;color:#fff;padding:8px 16px;border-radius:40px;font-weight:800;font-size:22px;backdrop-filter:blur(4px)}
+#timer.show{display:flex}
+#timer button{font:inherit;font-size:15px;border:0;border-radius:20px;padding:5px 13px;cursor:pointer;background:var(--sun);color:var(--ink);font-weight:800}
+#timer.low #tt{color:var(--coral)}
+
+/* team cards */
+.team{border-radius:22px;padding:22px;color:#fff;font-weight:800;font-size:25px;line-height:1.3;box-shadow:0 8px 0 #0003}
+.team b{font-size:50px;display:block;line-height:1}
+.team span{font-size:21px;font-weight:600;display:block;margin-top:8px}
+.crit{display:flex;gap:12px;margin-top:18px}
+.crit div{flex:1;background:#fff;border-radius:16px;padding:12px;text-align:center;font-weight:800;font-size:20px;box-shadow:0 5px 16px #2b1b4d22}
+
+/* tabs */
+.tabs{display:flex;gap:10px;margin:14px 0 16px}
+.tab{font:inherit;font-weight:800;font-size:20px;padding:11px 22px;border-radius:40px;border:3px solid var(--ink);background:#fff;color:var(--ink);cursor:pointer}
+.tab.on{background:var(--ink);color:var(--sun)}
+.pane{display:none;height:calc(100% - 195px)}
+.pane.on{display:flex;animation:in .4s}
+.kv{background:#fff;border-radius:16px;padding:12px 20px;margin-bottom:12px;box-shadow:0 5px 16px #2b1b4d1f}
+.kv b{display:block;font-size:17px;letter-spacing:.08em;text-transform:uppercase;color:var(--coral)}
+.kv span{font-size:23px;line-height:1.35}
+
+/* table */
+table{width:100%;border-collapse:separate;border-spacing:0 10px;font-size:23px}
+th{padding:14px;color:#fff;font-size:23px}
+th:nth-child(2){background:var(--blue);border-radius:16px 0 0 16px}th:nth-child(3){background:var(--teal)}th:nth-child(4){background:var(--coral);border-radius:0 16px 16px 0}
+td{background:#fff;padding:16px 18px;vertical-align:top}
+td:first-child{background:var(--ink);color:var(--sun);font-weight:800;border-radius:16px 0 0 16px;width:14%}
+td:last-child{border-radius:0 16px 16px 0}
+
+/* swot */
+.swot{display:grid;grid-template-columns:1fr 1fr;gap:16px;height:calc(100% - 128px)}
+.sw{border-radius:22px;color:#fff;padding:18px 24px;cursor:pointer;display:flex;flex-direction:column;justify-content:center;box-shadow:0 8px 0 #0003;transition:.2s}
+.sw:hover{transform:translateY(-3px)}
+.sw b{font-size:36px;font-weight:900}
+.sw b i{font-style:normal;font-size:21px;font-weight:700;opacity:.9;margin-left:8px}
+.sw span{font-size:23px;line-height:1.35;max-height:0;opacity:0;overflow:hidden;transition:.45s}
+.sw.on span{max-height:140px;opacity:1;margin-top:6px}
+
+/* envelopes */
+.env{width:100%;border:0;font:inherit;cursor:pointer;border-radius:22px;padding:22px;background:linear-gradient(160deg,#ffd978,var(--sun));color:var(--ink);font-weight:900;font-size:30px;box-shadow:0 8px 0 #c97a1c;margin-bottom:18px;transition:.15s;text-align:left}
+.env:hover{transform:translateY(-3px)}
+.env small{display:block;font-size:19px;font-weight:700;opacity:.8}
+.env.used{background:#ddd;box-shadow:0 8px 0 #aaa;opacity:.7}
+.sit{background:#fff;border-radius:22px;padding:26px 30px;box-shadow:0 12px 30px #2b1b4d33;display:flex;flex-direction:column;justify-content:center}
+.sit h3{font-size:32px;color:var(--coral);margin-bottom:10px}
+.sit .q{font-size:27px;font-weight:800;margin-top:12px;color:var(--ink)}
+.blur{filter:blur(9px);transition:.5s;cursor:pointer;user-select:none}
+.blur.on{filter:none}
+.card{background:#fff;border-radius:22px;padding:24px 28px;box-shadow:0 10px 26px #2b1b4d26}
+.card h3{font-size:31px;margin-bottom:10px}
+
+/* smart */
+.sm{display:flex;gap:12px;margin-top:16px}
+.sm .flip{height:230px}
+.sm .front{font-size:90px;background:linear-gradient(160deg,var(--violet),var(--blue));color:#fff;box-shadow:0 8px 0 #2b2a9a}
+.sm .back{background:#fff;color:var(--ink);justify-content:center;padding:14px;text-align:center;box-shadow:0 8px 0 #0002}
+.sm .back b{background:none;color:var(--coral);padding:0;font-size:26px}
+.sm .back span{font-size:18px;line-height:1.3;margin-top:6px}
+.opt{display:block;width:100%;text-align:left;font:inherit;font-size:24px;font-weight:700;background:#fff;border:4px solid #e4dcf5;border-radius:20px;padding:16px 22px;margin-bottom:14px;cursor:pointer;transition:.2s;color:var(--ink)}
+.opt:hover{border-color:var(--violet)}
+.opt.ok{border-color:var(--teal);background:#e6fbf8}
+.opt.no{border-color:var(--coral);background:#ffecec}
+.opt small{display:block;font-size:18px;font-weight:600;color:var(--mute);margin-top:4px}
+
+/* compass */
+@keyframes sway{0%,100%{transform:rotate(-25deg)}50%{transform:rotate(35deg)}}
+.needle{transform-origin:200px 200px;animation:sway 3.2s ease-in-out infinite}
+.chip{display:inline-block;background:#fff;color:var(--ink);font-weight:900;font-size:27px;padding:12px 24px;border-radius:40px;margin:0 10px 14px 0;box-shadow:0 6px 0 #0003}
+
+
+.t5{padding:20px 26px;font-size:34px;line-height:1.25;min-height:200px}
+.t5 b{font-size:30px;font-weight:800;opacity:.9;margin-bottom:10px}
+.t5 div{font-size:38px;font-weight:900;line-height:1.2}
+.t5 span{font-size:26px}
+.crit5{display:flex;gap:16px}
+.crit5 div{flex:1;background:#fff;border-radius:22px;padding:16px 10px;text-align:center;font-weight:900;font-size:30px;box-shadow:0 8px 22px #2b1b4d26}
+.crit5 i{display:block;font-style:normal;font-size:52px;margin-bottom:6px}
+.tab{font-size:26px;padding:12px 26px}
+.pane{height:calc(100% - 215px);gap:30px}
+.info{flex:1;display:flex;flex-direction:column;justify-content:space-between}
+.info .kv{flex:1;margin-bottom:14px;display:flex;flex-direction:column;justify-content:center;padding:14px 24px}
+.info .kv:last-child{margin-bottom:0}
+.info .kv b{font-size:21px;margin-bottom:4px}
+.info .kv span{font-size:30px;font-weight:800;line-height:1.25}
+.cmp{border-spacing:0 10px;font-size:28px}
+.cmp th{font-size:30px;padding:12px 10px}
+.cmp td{font-size:27px;padding:14px 18px;line-height:1.3;font-weight:600}
+.cmp td:first-child{width:17%;font-size:26px}
+
+.front.img{background-size:cover;background-position:center;font-size:0;box-shadow:0 10px 0 #0004;align-items:flex-start;justify-content:flex-start}
+.front .num{position:absolute;left:12px;top:12px;width:48px;height:48px;border-radius:50%;background:var(--sun);color:var(--ink);font-size:28px;font-weight:900;display:flex;align-items:center;justify-content:center}
+.back.name{justify-content:center;gap:6px;color:#fff}
+.back.name i{font-style:normal;font-size:84px}
+.back.name b{background:none;padding:0;font-size:36px;line-height:1.15}
+.back.name small{font-size:22px;font-weight:600;opacity:.9}
+.route{display:flex;gap:12px;margin-top:26px}
+.route div{flex:1;border-radius:22px;padding:22px 14px;color:#fff;text-align:center;box-shadow:0 8px 0 #0003;display:flex;flex-direction:column;gap:6px}
+.route i{font-style:normal;font-size:48px;font-weight:900;line-height:1}
+.route b{font-size:27px;line-height:1.15}
+.route span{font-size:21px;opacity:.95}
+.route em{font-style:normal;font-weight:800;font-size:22px;background:#0003;border-radius:20px;padding:4px 0;margin-top:8px}
+.formula{display:flex;align-items:center;gap:16px;margin-top:26px}
+.formula div{flex:1;border-radius:24px;padding:28px 22px;text-align:center;color:#fff;box-shadow:0 10px 0 #0003}
+.formula div b{display:block;font-size:40px;margin-bottom:8px}
+.formula div span{font-size:25px;line-height:1.3;display:block}
+.formula u{text-decoration:none;font-size:56px;font-weight:900;color:var(--sun)}
+.formula.f3 div{padding:20px 16px}.formula.f3 b{font-size:36px}
+.steps{display:flex;gap:16px;margin-top:20px}
+.steps div{flex:1;border-radius:22px;padding:22px 24px;color:#fff;box-shadow:0 8px 0 #0003;min-height:230px}
+.steps i{font-style:normal;font-size:50px;font-weight:900;display:block;line-height:1}
+.steps b{display:block;font-size:38px;margin:8px 0}
+.steps span{font-size:25px;line-height:1.35;display:block}
+.hol{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:14px}
+.hol div{background:#fff;border-radius:20px;padding:16px 20px;box-shadow:0 6px 18px #2b1b4d22;position:relative;padding-left:96px;min-height:150px}
+.hol b{position:absolute;left:18px;top:18px;width:62px;height:62px;border-radius:50%;color:#fff;font-size:38px;display:flex;align-items:center;justify-content:center}
+.hol h4{font-size:26px;line-height:1.2;margin-bottom:6px}
+.hol p{font-size:23px;line-height:1.3;color:var(--mute)}
+.cmp th:nth-child(2){background:var(--blue)}.cmp th:nth-child(3){background:var(--teal)}.cmp th:nth-child(4){background:var(--violet);border-radius:0}.cmp th:nth-child(5){background:var(--coral);border-radius:0 16px 16px 0}
+.cmp td{font-size:25px}.cmp th{font-size:25px}.cmp td:first-child{width:15%;font-size:24px}
+.ex{flex:1;border-radius:22px;padding:20px 26px;box-shadow:0 8px 20px #2b1b4d22}
+.ex b{font-size:30px;display:block;margin-bottom:6px}.ex p{font-size:28px;font-weight:700;line-height:1.35}
+.ex.bad{background:#ffecec;border:4px solid var(--coral)}.ex.bad b{color:var(--coral)}
+.ex.good{background:#e6fbf8;border:4px solid var(--teal)}.ex.good b{color:#007d75}
+.t5 div{font-size:32px}
+.q4{margin-top:16px;font-size:23px;line-height:1.45;background:#fff3d6;border-radius:16px;padding:14px 20px}
+.info .kv span{font-size:26px!important;line-height:1.25!important}.info .kv{padding:8px 20px!important;margin-bottom:10px!important}.info .kv b{font-size:18px!important;margin-bottom:2px!important}.pane .photo{flex:.8!important}
+#nav{position:fixed;right:16px;bottom:12px;z-index:20;display:flex;gap:8px;align-items:center;color:#b7a9dd;font:14px sans-serif}
+#nav button{border:0;width:36px;height:36px;border-radius:50%;background:#ffffff26;color:#fff;font-size:18px;cursor:pointer}
+#prog{position:fixed;left:0;top:0;height:6px;background:linear-gradient(90deg,var(--coral),var(--sun));z-index:30;transition:width .3s}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+<div id="stage">
+
+<!-- 1. BÌA -->
+<section class="slide dark" style="padding:0">
+  <div class="photo" style="position:absolute;inset:0;border-radius:0;box-shadow:none;background-image:linear-gradient(100deg,#24104fee 38%,#24104f66),url('images/vnu-gate.jpg')"></div>
+  <div style="position:absolute;left:80px;top:110px;width:800px">
+    <span class="kicker">Hoạt động trải nghiệm, hướng nghiệp 12</span>
+    <h2 style="font-size:70px;margin:26px 0 16px;line-height:1.1">Chọn <em>hướng đi</em><br>sau lớp 12</h2>
+    <p style="font-size:34px;font-weight:800;color:var(--sun)">Hiểu mình – Hiểu đường – Hành động</p>
+    <p style="margin-top:30px;color:#e3d8ff;font-size:26px">1 tiết (45 phút) &nbsp;•&nbsp; Lớp 12A8</p>
+  </div>
+</section>
+
+<!-- 2. LỘ TRÌNH -->
+<section class="slide">
+  <span class="kicker">Hôm nay chúng ta làm gì?</span>
+  <h2 style="font-size:48px">Tiết học này có <em>5 chặng</em></h2>
+  <div class="route">
+    <div style="background:var(--coral)"><i>1</i><b>Đoán</b><span>hướng đi qua ảnh</span><em>5 phút</em></div>
+    <div style="background:var(--blue)"><i>2</i><b>Hiểu mình</b><span>Phiếu 1</span><em>10 phút</em></div>
+    <div style="background:var(--teal)"><i>3</i><b>Hiểu đường</b><span>Phiếu 2</span><em>10 phút</em></div>
+    <div style="background:var(--violet)"><i>4</i><b>Tư vấn cho bạn</b><span>tình huống</span><em>10 phút</em></div>
+    <div style="background:#d98a0b"><i>5</i><b>Kế hoạch 3 việc</b><span>Phiếu 3</span><em>10 phút</em></div>
+  </div>
+  <p style="margin-top:34px;font-size:32px;font-weight:800;line-height:1.4">Cuối tiết, em có trong tay: <span style="color:var(--coral)">bản hiểu mình</span> • <span style="color:var(--blue)">bản đồ các con đường</span> • <span style="color:#b7791f">kế hoạch 3 việc</span>.</p>
+</section>
+
+<!-- 3. ĐOÁN ẢNH -->
+<section class="slide dark" data-time="300">
+  <span class="kicker">Hoạt động 1 • Khởi động • 5 phút</span>
+  <h2 style="font-size:46px">🔍 Bạn trong ảnh đang chọn <em>con đường nào</em>?</h2>
+  <p class="sub" style="font-size:26px">Nhìn ảnh, đoán hướng đi và nói <b>dựa vào chi tiết nào</b>. Đoán xong, bấm vào ảnh để lật đáp án.</p>
+  <div class="cards" style="height:400px;margin-top:6px">
+    <div class="flip"><div class="in"><div class="face front img" style="background-image:url('images/goi-y-1.png'),url('images/vnu-gate.jpg')"><span class="num">1</span></div><div class="face back name" style="background:linear-gradient(160deg,#3a7bff,#2347b8)"><i>🎓</i><b>Đại học</b></div></div></div>
+    <div class="flip"><div class="in"><div class="face front img" style="background-image:url('images/goi-y-2.png'),url('images/cd-ctim.jpg')"><span class="num">2</span></div><div class="face back name" style="background:linear-gradient(160deg,#00b8a9,#007d75)"><i>🏫</i><b>Cao đẳng</b></div></div></div>
+    <div class="flip"><div class="in"><div class="face front img" style="background-image:url('images/goi-y-3.png'),url('images/duhoc1.jpg')"><span class="num">3</span></div><div class="face back name" style="background:linear-gradient(160deg,#7c4dff,#4a22c4)"><i>🌏</i><b>Du học</b></div></div></div>
+    <div class="flip"><div class="in"><div class="face front img" style="background-image:url('images/goi-y-4.png'),url('images/cd-bachkhoa.jpg')"><span class="num">4</span></div><div class="face back name" style="background:linear-gradient(160deg,#ff9a3d,#d9620b)"><i>🛠</i><b>Học nghề<br><small>Trung cấp</small></b></div></div></div>
+    <div class="flip"><div class="in"><div class="face front img" style="background-image:url('images/goi-y-5.png'),url('images/xkld1.jpg')"><span class="num">5</span></div><div class="face back name" style="background:linear-gradient(160deg,#ff5a5f,#c2282d)"><i>💼</i><b>Đi làm ngay<br><small>hoặc XKLĐ</small></b></div></div></div>
+  </div>
+</section>
+
+<!-- 4. CÔNG THỨC -->
+<section class="slide dark">
+  <span class="kicker">Khởi động • Kết luận</span>
+  <h2 style="font-size:46px">Không có đường “tốt nhất” – chỉ có đường <em>hợp nhất với mình</em></h2>
+  <div class="formula">
+    <div style="background:#ff5a5f"><b>❤ THÍCH</b><span>Mình hứng thú với việc gì?</span></div>
+    <u>+</u>
+    <div style="background:#00b8a9"><b>💪 GIỎI</b><span>Mình làm tốt hoặc có thể học tốt?</span></div>
+    <u>+</u>
+    <div style="background:#ffc933;color:#2b1b4d"><b>🏠 ĐIỀU KIỆN</b><span>Gia đình, tài chính, sức khỏe, nơi ở?</span></div>
+  </div>
+  <p style="margin-top:34px;font-size:34px;font-weight:800;text-align:center;color:var(--sun)">= Hướng đi phù hợp với <span style="color:#fff">chính em</span></p>
+</section>
+
+<!-- 5. HIỂU MÌNH -->
+<section class="slide" data-time="420">
+  <span class="kicker">Hoạt động 2.1 • Hiểu mình • 10 phút</span>
+  <h2 style="font-size:48px">🧭 <em>Phiếu 1</em>: Em thích gì?</h2>
+  <div class="steps">
+    <div style="background:var(--blue)"><i>①</i><b>Tích ✓</b><span>những câu ĐÚNG với em ở 6 nhóm R – I – A – S – E – C</span></div>
+    <div style="background:var(--teal)"><i>②</i><b>Cộng số câu</b><span>đã tích của từng nhóm</span></div>
+    <div style="background:var(--coral)"><i>③</i><b>Chọn 2 nhóm</b><span>nhiều câu nhất → mã 2 chữ cái của em</span></div>
+  </div>
+  <p style="margin-top:26px;font-size:29px;line-height:1.5"><b>Sau đó:</b> ghi 2 điều em <b style="color:var(--teal)">GIỎI</b> • ghi <b style="color:#b7791f">ĐIỀU KIỆN</b> của em • ghi hướng đi em đang nghĩ tới.</p>
+  <p style="margin-top:8px;font-size:25px;color:var(--mute)">Trả lời thật với chính mình – kết quả chỉ để tham khảo. (Phím T: đồng hồ)</p>
+</section>
+
+<!-- 6. HOLLAND -->
+<section class="slide">
+  <span class="kicker">Hiểu mình • Sáu nhóm sở thích (Holland)</span>
+  <h2 style="font-size:44px">Em thuộc nhóm nào? <em>Ngành ví dụ</em></h2>
+  <div class="hol">
+    <div><b style="background:#e8590c">R</b><h4>Kỹ thuật – Thực hành</h4><p>Cơ khí, điện, xây dựng, ô tô</p></div>
+    <div><b style="background:#2f6bff">I</b><h4>Nghiên cứu – Tìm tòi</h4><p>CNTT, y – dược, khoa học</p></div>
+    <div><b style="background:#c026d3">A</b><h4>Nghệ thuật – Sáng tạo</h4><p>Thiết kế, kiến trúc, truyền thông</p></div>
+    <div><b style="background:#16a34a">S</b><h4>Xã hội – Giúp đỡ</h4><p>Sư phạm, tâm lý, điều dưỡng</p></div>
+    <div><b style="background:#d98a0b">E</b><h4>Quản lý – Thuyết phục</h4><p>Kinh doanh, marketing, tài chính</p></div>
+    <div><b style="background:#0f766e">C</b><h4>Quy củ – Tỉ mỉ</h4><p>Kế toán, thống kê, hành chính</p></div>
+  </div>
+  <p style="margin-top:14px;font-size:25px;font-weight:700;color:var(--mute)">Mỗi người thường là tổ hợp 2 – 3 nhóm. Mã chỉ cho biết em <u>thích gì</u> – còn phải xét thêm em <u>giỏi gì</u> và <u>điều kiện</u>.</p>
+</section>
+
+<!-- 7. HIỂU ĐƯỜNG: NHIỆM VỤ -->
+<section class="slide" data-time="240">
+  <span class="kicker">Hoạt động 2.2 • Hiểu đường • 10 phút</span>
+  <h2 style="font-size:48px">🧩 Mỗi nhóm <em>phụ trách một hướng đi</em></h2>
+  <div class="row" style="gap:16px;margin-top:10px">
+    <div class="team t5" style="background:var(--blue)"><b>Nhóm 1</b><div>🎓 Đại học</div></div>
+    <div class="team t5" style="background:var(--teal)"><b>Nhóm 2</b><div>🏫 Cao đẳng – Trung cấp – Học nghề</div></div>
+    <div class="team t5" style="background:var(--violet)"><b>Nhóm 3</b><div>🌏 Du học</div></div>
+    <div class="team t5" style="background:var(--coral)"><b>Nhóm 4</b><div>💼 Đi làm ngay – XKLĐ</div></div>
+  </div>
+  <p style="margin:22px 0 10px;font-weight:900;font-size:34px">Điền <span style="color:var(--coral)">Phiếu 2 – phần A</span> (4 phút):</p>
+  <div class="crit5"><div><i>⏳</i>Bao lâu?</div><div><i>🚪</i>Vào bằng cách nào?</div><div><i>👤</i>Hợp với ai?</div><div><i>⚠️</i>Cần cân nhắc?</div></div>
+  <p style="margin-top:14px;font-size:24px;color:var(--mute)">Dùng Thẻ thông tin ở slide sau + hiểu biết của nhóm. Cử 1 bạn báo cáo (≤ 1 phút). Các nhóm khác ghi vào phần B.</p>
+</section>
+
+<!-- 8. THẺ THÔNG TIN -->
+<section class="slide">
+  <span class="kicker">Hiểu đường • Thẻ thông tin</span>
+  <h2 style="font-size:44px">Bốn con đường – <em>bấm để xem</em></h2>
+  <div class="tabs">
+    <button class="tab on" data-p="0">🎓 Đại học</button><button class="tab" data-p="1">🏫 CĐ – TC – Nghề</button><button class="tab" data-p="2">🌏 Du học</button><button class="tab" data-p="3">💼 Đi làm – XKLĐ</button>
+  </div>
+  <div class="pane on"><div class="photo" style="flex:.95;background-image:url('images/vnu-hcm.jpg')"></div>
+    <div class="info"><div class="kv"><b>⏳ Thời gian</b><span>Thường 4 năm; có ngành 5 – 6 năm</span></div><div class="kv"><b>🚪 Vào bằng cách nào</b><span>Xét tuyển theo đề án của từng trường</span></div><div class="kv"><b>👤 Hợp với</b><span>Thích học chuyên sâu, nghiên cứu</span></div><div class="kv"><b>⚠️ Cần cân nhắc</b><span>Học phí, điểm chuẩn, áp lực học</span></div></div></div>
+  <div class="pane"><div class="photo" style="flex:.95;background-image:url('images/cd-bachkhoa.jpg')"></div>
+    <div class="info"><div class="kv"><b>⏳ Thời gian</b><span>Sơ cấp &lt; 1 năm • TC 1–2 • CĐ 2–3 năm</span></div><div class="kv"><b>🚪 Vào bằng cách nào</b><span>Xét học bạ / tốt nghiệp theo từng trường</span></div><div class="kv"><b>👤 Hợp với</b><span>Thích thực hành, muốn có nghề sớm</span></div><div class="kv"><b>⚠️ Cần cân nhắc</b><span>Chọn trường uy tín, có liên kết doanh nghiệp</span></div></div></div>
+  <div class="pane"><div class="photo" style="flex:.95;background-image:url('images/duhoc1.jpg')"></div>
+    <div class="info"><div class="kv"><b>⏳ Thời gian</b><span>Tùy chương trình và quốc gia</span></div><div class="kv"><b>🚪 Vào bằng cách nào</b><span>Hồ sơ, ngoại ngữ, tài chính hoặc học bổng</span></div><div class="kv"><b>👤 Hợp với</b><span>Có định hướng rõ, chủ động</span></div><div class="kv"><b>⚠️ Cần cân nhắc</b><span>Chi phí cao; tránh môi giới thiếu uy tín</span></div></div></div>
+  <div class="pane"><div class="photo" style="flex:.95;background-image:url('images/xkld2.jpg')"></div>
+    <div class="info"><div class="kv"><b>⏳ Thời gian</b><span>Đi làm ngay; XKLĐ theo hợp đồng</span></div><div class="kv"><b>🚪 Vào bằng cách nào</b><span>Tìm việc, hoặc qua doanh nghiệp được cấp phép</span></div><div class="kv"><b>👤 Hợp với</b><span>Cần tự lập sớm, muốn có kinh nghiệm</span></div><div class="kv"><b>⚠️ Cần cân nhắc</b><span>Kiểm tra giấy phép; nên học thêm nghề</span></div></div></div>
+</section>
+
+<!-- 9. BẢNG ĐỐI CHIẾU -->
+<section class="slide">
+  <span class="kicker">Hiểu đường • Chốt</span>
+  <h2 style="font-size:44px">So sánh <em>bốn con đường</em></h2>
+  <table class="cmp">
+    <tr><th></th><th>🎓 Đại học</th><th>🏫 CĐ – TC – Nghề</th><th>🌏 Du học</th><th>💼 Đi làm – XKLĐ</th></tr>
+    <tr><td>⏳ Thời gian</td><td>4 – 6 năm</td><td>1 – 3 năm</td><td>Tùy chương trình</td><td>Làm ngay</td></tr>
+    <tr><td>👤 Hợp với</td><td>Thích học chuyên sâu</td><td>Thích thực hành</td><td>Có định hướng, ngoại ngữ</td><td>Cần tự lập sớm</td></tr>
+    <tr><td>⚠️ Cân nhắc</td><td>Học phí, điểm chuẩn</td><td>Chọn trường uy tín</td><td>Chi phí cao</td><td>Giấy phép, học thêm</td></tr>
+  </table>
+  <p style="margin-top:10px;font-size:29px;font-weight:900;color:var(--coral);line-height:1.3">Các con đường không đóng cửa nhau: cao đẳng có thể liên thông lên đại học; đi làm vẫn có thể học tiếp.</p>
+</section>
+
+<!-- 10. TÌNH HUỐNG -->
+<section class="slide dark" data-time="240">
+  <span class="kicker">Hoạt động 3 • Luyện tập • 10 phút</span>
+  <h2 style="font-size:46px">📮 <em>Tư vấn cho bạn</em> – bốc thăm tình huống</h2>
+  <div class="row fill" style="margin-top:4px;gap:30px">
+    <div style="flex:.5;display:flex;flex-direction:column;justify-content:center">
+      <button class="env" data-s="0">✉️ Phiếu 1<small>Bấm để bốc thăm</small></button>
+      <button class="env" data-s="1">✉️ Phiếu 2<small>Bấm để bốc thăm</small></button>
+      <p class="hint">Mỗi nhóm bốc 1 phiếu – thảo luận 4 phút (phím T)</p>
+    </div>
+    <div class="sit" id="sit" style="flex:1.6;color:var(--ink)">
+      <p style="font-size:28px;color:var(--mute);text-align:center">👈 Chọn một phiếu để mở tình huống</p>
+    </div>
+  </div>
+</section>
+
+<!-- 11. GỢI Ý -->
+<section class="slide">
+  <span class="kicker">Luyện tập • Chốt</span>
+  <h2 style="font-size:44px">Gợi ý: luôn có <em>nhiều phương án</em></h2>
+  <p class="sub" style="font-size:23px">Nhóm trình bày xong, bấm vào thẻ để xem gợi ý.</p>
+  <div class="row" style="margin-top:4px">
+    <div class="card blur" style="border-top:8px solid var(--coral)"><h3>Linh – thiết kế hay kế toán?</h3><ul><li>Làm bộ sản phẩm, tìm hiểu việc làm ngành thiết kế.</li><li>Phương án gần: truyền thông, marketing; hoặc học kế toán và giữ thiết kế làm thế mạnh.</li><li>Trao đổi với bố mẹ bằng thông tin, không tranh cãi.</li></ul></div>
+    <div class="card blur" style="border-top:8px solid var(--teal)"><h3>Nam – CNTT, khó khăn kinh tế</h3><ul><li>Trường công lập học phí thấp, săn học bổng, vay tín dụng sinh viên.</li><li>Học cao đẳng CNTT rồi liên thông lên đại học.</li><li>Vừa học vừa làm; tự học trực tuyến miễn phí.</li></ul></div>
+  </div>
+</section>
+
+<!-- 12. KẾ HOẠCH -->
+<section class="slide" data-time="300">
+  <span class="kicker">Hoạt động 4 • Vận dụng • 8 phút</span>
+  <h2 style="font-size:46px">📝 <em>Phiếu 3</em>: Kế hoạch 3 việc</h2>
+  <div class="formula f3">
+    <div style="background:var(--blue)"><b>Cụ thể</b><span>Làm việc gì?</span></div><u>+</u>
+    <div style="background:var(--teal)"><b>Có hạn chót</b><span>Làm khi nào?</span></div><u>+</u>
+    <div style="background:var(--coral)"><b>Kiểm tra được</b><span>Xong thì thấy gì?</span></div>
+  </div>
+  <div class="row" style="margin-top:22px;gap:20px">
+    <div class="ex bad"><b>✘ Chưa tốt</b><p>“Cố gắng học giỏi hơn.”</p></div>
+    <div class="ex good"><b>✔ Tốt</b><p>“Đọc đề án tuyển sinh trường X, ghi 1 trang ghi chú – hạn 30/11.”</p></div>
+  </div>
+  <p style="margin-top:18px;font-size:26px;font-weight:700">Viết xong → đổi phiếu với bạn cùng bàn, tích ✓ từng việc theo 3 tiêu chí. (Phím T)</p>
+</section>
+
+<!-- 13. TỔNG KẾT -->
+<section class="slide dark">
+  <span class="kicker">Tổng kết & dặn dò</span>
+  <h2 style="font-size:46px">Bắt đầu từ <em>việc nhỏ hôm nay</em></h2>
+  <div class="row fill" style="margin-top:10px;gap:34px;align-items:center">
+    <div>
+      <p style="font-size:30px;font-weight:800;color:var(--sun);line-height:1.4">“Chọn hướng đi không phải chọn một lần cho cả đời, mà là bắt đầu bằng những việc nhỏ làm được ngay từ hôm nay.”</p>
+      <ul style="margin-top:20px">
+        <li>Dán Phiếu 3 ở góc học tập và làm đúng hạn.</li>
+        <li>Trao đổi với cha mẹ, thầy cô về Phiếu 1 và Phiếu 3.</li>
+        <li>Tiết sau: tìm hiểu <b>1 ngành, 1 trường</b> em đang cân nhắc.</li>
+      </ul>
+    </div>
+    <div class="photo" style="background-image:url('images/sv1.jpg')"></div>
+  </div>
+</section>
+
+</div>
+
+<div id="timer"><span>⏱</span><span id="tt">00:00</span><button id="tgo">Bắt đầu</button><button id="trs">↺</button></div>
+<div id="nav"><button id="prev">‹</button><span id="pg"></span><button id="next">›</button></div>
+
+<script>
+const slides=[...document.querySelectorAll('.slide')],stage=document.getElementById('stage');
+let i=Math.max(0,Math.min(slides.length-1,(parseInt(location.hash.slice(1))||1)-1));
+function show(n){i=Math.max(0,Math.min(slides.length-1,n));slides.forEach((s,k)=>s.classList.toggle('active',k===i));
+ document.getElementById('prog').style.width=((i+1)/slides.length*100)+'%';document.getElementById('pg').textContent=(i+1)+' / '+slides.length;
+ history.replaceState(null,'','#'+(i+1));setupTimer()}
+function fit(){stage.style.transform='translate(-50%,-50%) scale('+Math.min(innerWidth/1280,innerHeight/720)+')'}
+addEventListener('resize',fit);fit();
+
+/* timer */
+let left=0,tm=null;const T=document.getElementById('timer'),tt=document.getElementById('tt'),tgo=document.getElementById('tgo');
+const fmt=s=>String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');
+function draw(){tt.textContent=fmt(left);T.classList.toggle('low',left<=30)}
+function stopT(){clearInterval(tm);tm=null;tgo.textContent='Bắt đầu'}
+function setupTimer(){stopT();const d=+slides[i].dataset.time||0;T.classList.toggle('show',!!d);left=d;draw()}
+function toggleT(){if(tm){stopT();return}if(left<=0)setupTimer();tgo.textContent='Tạm dừng';
+ tm=setInterval(()=>{left--;draw();if(left<=0){stopT();beep()}},1000)}
+function beep(){try{const a=new AudioContext(),o=a.createOscillator();o.connect(a.destination);o.frequency.value=880;o.start();setTimeout(()=>o.stop(),600)}catch(e){}}
+tgo.onclick=toggleT;document.getElementById('trs').onclick=setupTimer;
+
+/* interactions */
+document.querySelectorAll('.flip').forEach(f=>f.onclick=()=>f.classList.toggle('on'));
+document.querySelectorAll('.sw').forEach(s=>s.onclick=()=>s.classList.toggle('on'));
+document.querySelectorAll('.blur').forEach(s=>s.onclick=()=>s.classList.toggle('on'));
+document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{const sec=t.closest('.slide');
+ sec.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x===t));sec.querySelectorAll('.pane').forEach((p,k)=>p.classList.toggle('on',k==t.dataset.p))});
+const sits=[
+ '<h3>✉️ Tình huống 1 – Linh</h3><p style="font-size:27px">Linh <b>thích và có khiếu thiết kế đồ họa</b>, đã tự học và có vài sản phẩm. Bố mẹ muốn Linh thi ngành <b>Kế toán</b> vì “ổn định, dễ xin việc”.</p>',
+ '<h3>✉️ Tình huống 2 – Nam</h3><p style="font-size:27px">Nam <b>học khá, rất thích Công nghệ thông tin</b>. Gia đình làm nông, <b>kinh tế khó khăn</b>, học phí và sinh hoạt phí ở thành phố là gánh nặng lớn.</p>'];
+const tail='<div class="q4"><b>Trả lời 4 câu hỏi:</b><br>① Bạn ấy THÍCH và GIỎI gì? ② Điều kiện, khó khăn là gì? ③ Có ít nhất 2 phương án nào, chọn phương án nào, vì sao? ④ Bước tiếp theo là gì?</div>';
+document.querySelectorAll('.env').forEach(b=>b.onclick=()=>{document.getElementById('sit').innerHTML=sits[b.dataset.s]+tail;b.classList.add('used')});
+document.querySelectorAll('.opt').forEach(o=>o.onclick=()=>o.classList.add(o.dataset.ok==='1'?'ok':'no'));
+
+/* navigation */
+document.getElementById('prev').onclick=()=>show(i-1);document.getElementById('next').onclick=()=>show(i+1);
+addEventListener('keydown',e=>{const k=e.key;
+ if(['ArrowRight','PageDown',' '].includes(k)){e.preventDefault();show(i+1)}
+ else if(['ArrowLeft','PageUp'].includes(k))show(i-1);
+ else if(k==='Home')show(0);else if(k==='End')show(slides.length-1);
+ else if(k==='t'||k==='T')toggleT();
+ else if(k==='f'||k==='F'){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen()}});
+show(i);
+</script>
+</body>
+</html>
