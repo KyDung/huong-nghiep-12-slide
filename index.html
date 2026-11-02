@@ -178,6 +178,19 @@ td:last-child{border-radius:0 16px 16px 0}
 .t5 div{font-size:32px}
 .q4{margin-top:16px;font-size:23px;line-height:1.45;background:#fff3d6;border-radius:16px;padding:14px 20px}
 .info .kv span{font-size:26px!important;line-height:1.25!important}.info .kv{padding:8px 20px!important;margin-bottom:10px!important}.info .kv b{font-size:18px!important;margin-bottom:2px!important}.pane .photo{flex:.8!important}
+
+.rid{display:flex;flex-direction:column;gap:9px;margin-top:10px}
+.rid .r{display:flex;align-items:center;gap:16px;background:#ffffff22;border-radius:20px;padding:8px 14px 8px 12px;cursor:pointer;min-height:84px}
+.rid .n{width:52px;height:52px;border-radius:50%;background:var(--sun);color:var(--ink);font-size:28px;font-weight:900;display:flex;align-items:center;justify-content:center;flex:none}
+.rid p{flex:1;font-size:24px;line-height:1.3;color:#fff}
+.rid .a{width:310px;height:68px;border-radius:16px;background:var(--sun);color:var(--ink);font-size:40px;font-weight:900;display:flex;align-items:center;justify-content:center;flex:none;text-align:center;line-height:1.1}
+.rid .v{display:none;font-size:26px;color:#fff}
+.rid .r.on .a{background:var(--c)}
+.rid .r.on .q{display:none}.rid .r.on .v{display:block}
+.ex small{display:block;margin-top:6px;font-size:21px;line-height:1.35;color:var(--mute);font-weight:600}
+.hol u{text-decoration:none;font-weight:800;color:var(--ink)}
+.hol p{font-size:21px}
+.hol div{min-height:168px}
 #nav{position:fixed;right:16px;bottom:12px;z-index:20;display:flex;gap:8px;align-items:center;color:#b7a9dd;font:14px sans-serif}
 #nav button{border:0;width:36px;height:36px;border-radius:50%;background:#ffffff26;color:#fff;font-size:18px;cursor:pointer}
 #prog{position:fixed;left:0;top:0;height:6px;background:linear-gradient(90deg,var(--coral),var(--sun));z-index:30;transition:width .3s}
@@ -200,93 +213,92 @@ td:last-child{border-radius:0 16px 16px 0}
 
 <!-- 2. LỘ TRÌNH -->
 <section class="slide">
-  <span class="kicker">Hôm nay chúng ta làm gì?</span>
-  <h2 style="font-size:48px">Tiết học này có <em>5 chặng</em></h2>
+  <span class="kicker">Nội dung tiết học</span>
+  <h2 style="font-size:46px">Năm chặng để <em>chọn hướng đi</em> cho mình</h2>
   <div class="route">
-    <div style="background:var(--coral)"><i>1</i><b>Đoán</b><span>hướng đi qua ảnh</span><em>5 phút</em></div>
-    <div style="background:var(--blue)"><i>2</i><b>Hiểu mình</b><span>Phiếu 1</span><em>10 phút</em></div>
-    <div style="background:var(--teal)"><i>3</i><b>Hiểu đường</b><span>Phiếu 2</span><em>10 phút</em></div>
-    <div style="background:var(--violet)"><i>4</i><b>Tư vấn cho bạn</b><span>tình huống</span><em>10 phút</em></div>
-    <div style="background:#d98a0b"><i>5</i><b>Kế hoạch 3 việc</b><span>Phiếu 3</span><em>10 phút</em></div>
+    <div style="background:var(--coral)"><i>1</i><b>Giải câu đố</b><span>Nhận ra các hướng đi phổ biến sau lớp 12</span><em>5 phút</em></div>
+    <div style="background:var(--blue)"><i>2</i><b>Hiểu mình</b><span>Xác định sở thích, điểm mạnh và điều kiện của bản thân</span><em>10 phút</em></div>
+    <div style="background:var(--teal)"><i>3</i><b>Hiểu đường</b><span>Tìm hiểu và so sánh bốn con đường</span><em>10 phút</em></div>
+    <div style="background:var(--violet)"><i>4</i><b>Tư vấn cho bạn</b><span>Dùng ba tiêu chí để giúp bạn trong tình huống thật</span><em>10 phút</em></div>
+    <div style="background:#d98a0b"><i>5</i><b>Lập kế hoạch</b><span>Viết ra 3 việc cụ thể sẽ làm trong học kỳ này</span><em>8 phút</em></div>
   </div>
-  <p style="margin-top:34px;font-size:32px;font-weight:800;line-height:1.4">Cuối tiết, em có trong tay: <span style="color:var(--coral)">bản hiểu mình</span> • <span style="color:var(--blue)">bản đồ các con đường</span> • <span style="color:#b7791f">kế hoạch 3 việc</span>.</p>
+  <p style="margin-top:30px;font-size:30px;font-weight:800;line-height:1.45">Kết thúc tiết học, mỗi em có trong tay <span style="color:var(--coral)">một bản hiểu mình</span>, <span style="color:var(--blue)">một bản đồ các con đường</span> và <span style="color:#b7791f">một kế hoạch hành động</span>.</p>
 </section>
 
-<!-- 3. ĐOÁN ẢNH -->
+<!-- 3. CÂU ĐỐ -->
 <section class="slide dark" data-time="300">
   <span class="kicker">Hoạt động 1 • Khởi động • 5 phút</span>
-  <h2 style="font-size:46px">🔍 Bạn trong ảnh đang chọn <em>con đường nào</em>?</h2>
-  <p class="sub" style="font-size:26px">Nhìn ảnh, đoán hướng đi và nói <b>dựa vào chi tiết nào</b>. Đoán xong, bấm vào ảnh để lật đáp án.</p>
-  <div class="cards" style="height:400px;margin-top:6px">
-    <div class="flip"><div class="in"><div class="face front img" style="background-image:url('images/goi-y-1.png'),url('images/vnu-gate.jpg')"><span class="num">1</span></div><div class="face back name" style="background:linear-gradient(160deg,#3a7bff,#2347b8)"><i>🎓</i><b>Đại học</b></div></div></div>
-    <div class="flip"><div class="in"><div class="face front img" style="background-image:url('images/goi-y-2.png'),url('images/cd-ctim.jpg')"><span class="num">2</span></div><div class="face back name" style="background:linear-gradient(160deg,#00b8a9,#007d75)"><i>🏫</i><b>Cao đẳng</b></div></div></div>
-    <div class="flip"><div class="in"><div class="face front img" style="background-image:url('images/goi-y-3.png'),url('images/duhoc1.jpg')"><span class="num">3</span></div><div class="face back name" style="background:linear-gradient(160deg,#7c4dff,#4a22c4)"><i>🌏</i><b>Du học</b></div></div></div>
-    <div class="flip"><div class="in"><div class="face front img" style="background-image:url('images/goi-y-4.png'),url('images/cd-bachkhoa.jpg')"><span class="num">4</span></div><div class="face back name" style="background:linear-gradient(160deg,#ff9a3d,#d9620b)"><i>🛠</i><b>Học nghề<br><small>Trung cấp</small></b></div></div></div>
-    <div class="flip"><div class="in"><div class="face front img" style="background-image:url('images/goi-y-5.png'),url('images/xkld1.jpg')"><span class="num">5</span></div><div class="face back name" style="background:linear-gradient(160deg,#ff5a5f,#c2282d)"><i>💼</i><b>Đi làm ngay<br><small>hoặc XKLĐ</small></b></div></div></div>
+  <h2 style="font-size:44px">🧩 Câu đố: <em>đó là con đường nào?</em></h2>
+  <div class="rid">
+    <div class="r" style="--c:#3a7bff"><span class="n">1</span><p>Học 4 năm, có ngành tới 6 năm, ở giảng đường và thư viện. Ra trường nhận bằng cử nhân, kỹ sư, bác sĩ…</p><div class="a"><span class="q">?</span><span class="v">🎓 Đại học</span></div></div>
+    <div class="r" style="--c:#00a699"><span class="n">2</span><p>Học 2 – 3 năm, vừa học lý thuyết vừa thực hành ở xưởng, phòng máy. Học xong có thể đi làm hoặc liên thông lên đại học.</p><div class="a"><span class="q">?</span><span class="v">🏫 Cao đẳng</span></div></div>
+    <div class="r" style="--c:#e8780c"><span class="n">3</span><p>Học vài tháng đến 2 năm một nghề cụ thể: sửa xe, điện lạnh, nấu ăn, làm tóc… Có tay nghề là có việc làm.</p><div class="a"><span class="q">?</span><span class="v">🛠 Học nghề, Trung cấp</span></div></div>
+    <div class="r" style="--c:#7c4dff"><span class="n">4</span><p>Cần hộ chiếu, vali và ngoại ngữ. Học ở một đất nước khác, xa nhà nhưng mở ra thế giới rộng hơn.</p><div class="a"><span class="q">?</span><span class="v">🌏 Du học</span></div></div>
+    <div class="r" style="--c:#e5484d"><span class="n">5</span><p>Không vào giảng đường mà đi làm ngay sau tốt nghiệp, có thu nhập sớm; làm trong nước hoặc theo hợp đồng ở nước ngoài.</p><div class="a"><span class="q">?</span><span class="v">💼 Đi làm ngay, XKLĐ</span></div></div>
   </div>
 </section>
 
 <!-- 4. CÔNG THỨC -->
 <section class="slide dark">
   <span class="kicker">Khởi động • Kết luận</span>
-  <h2 style="font-size:46px">Không có đường “tốt nhất” – chỉ có đường <em>hợp nhất với mình</em></h2>
+  <h2 style="font-size:44px">Không có con đường “tốt nhất” cho tất cả, chỉ có con đường <em>hợp nhất với mình</em></h2>
+  <p class="sub" style="font-size:26px;margin-top:6px">Để biết đường nào hợp với mình, em cân nhắc ba điều:</p>
   <div class="formula">
-    <div style="background:#ff5a5f"><b>❤ THÍCH</b><span>Mình hứng thú với việc gì?</span></div>
+    <div style="background:#ff5a5f"><b>❤ THÍCH</b><span>Việc mình hứng thú, làm không thấy chán</span></div>
     <u>+</u>
-    <div style="background:#00b8a9"><b>💪 GIỎI</b><span>Mình làm tốt hoặc có thể học tốt?</span></div>
+    <div style="background:#00b8a9"><b>💪 GIỎI</b><span>Môn học, kỹ năng mình đang làm tốt hoặc có thể rèn thêm</span></div>
     <u>+</u>
-    <div style="background:#ffc933;color:#2b1b4d"><b>🏠 ĐIỀU KIỆN</b><span>Gia đình, tài chính, sức khỏe, nơi ở?</span></div>
+    <div style="background:#ffc933;color:#2b1b4d"><b>🏠 ĐIỀU KIỆN</b><span>Tài chính gia đình, ý kiến cha mẹ, sức khỏe, nơi ở</span></div>
   </div>
-  <p style="margin-top:34px;font-size:34px;font-weight:800;text-align:center;color:var(--sun)">= Hướng đi phù hợp với <span style="color:#fff">chính em</span></p>
+  <p style="margin-top:30px;font-size:32px;font-weight:800;text-align:center;color:var(--sun)">Ba điều này trùng nhau càng nhiều, lựa chọn càng chắc chắn.</p>
 </section>
 
 <!-- 5. HIỂU MÌNH -->
 <section class="slide" data-time="420">
   <span class="kicker">Hoạt động 2.1 • Hiểu mình • 10 phút</span>
-  <h2 style="font-size:48px">🧭 <em>Phiếu 1</em>: Em thích gì?</h2>
+  <h2 style="font-size:46px">🧭 <em>Phiếu 1</em>: Em thích làm những việc gì?</h2>
   <div class="steps">
-    <div style="background:var(--blue)"><i>①</i><b>Tích ✓</b><span>những câu ĐÚNG với em ở 6 nhóm R – I – A – S – E – C</span></div>
-    <div style="background:var(--teal)"><i>②</i><b>Cộng số câu</b><span>đã tích của từng nhóm</span></div>
-    <div style="background:var(--coral)"><i>③</i><b>Chọn 2 nhóm</b><span>nhiều câu nhất → mã 2 chữ cái của em</span></div>
+    <div style="background:var(--blue)"><i>①</i><b>Tích ✓</b><span>vào những câu đúng với em. Phiếu có 6 nhóm R – I – A – S – E – C, mỗi nhóm 3 câu.</span></div>
+    <div style="background:var(--teal)"><i>②</i><b>Cộng điểm</b><span>Đếm số câu đã tích của từng nhóm và ghi vào cột “Số câu”.</span></div>
+    <div style="background:var(--coral)"><i>③</i><b>Chọn mã</b><span>Lấy 2 nhóm có số câu nhiều nhất, ghép thành mã 2 chữ cái của em.</span></div>
   </div>
-  <p style="margin-top:26px;font-size:29px;line-height:1.5"><b>Sau đó:</b> ghi 2 điều em <b style="color:var(--teal)">GIỎI</b> • ghi <b style="color:#b7791f">ĐIỀU KIỆN</b> của em • ghi hướng đi em đang nghĩ tới.</p>
-  <p style="margin-top:8px;font-size:25px;color:var(--mute)">Trả lời thật với chính mình – kết quả chỉ để tham khảo. (Phím T: đồng hồ)</p>
+  <div class="card" style="margin-top:22px;border-left:10px solid var(--sun)"><p style="font-size:26px;line-height:1.45"><b>Ví dụ:</b> em tích 3 câu ở nhóm A, 2 câu ở nhóm I, 1 câu ở nhóm S → mã của em là <b>A – I</b> (thích sáng tạo và tìm tòi).<br><b>Sau đó</b> em ghi 2 điều mình <b style="color:#00867c">giỏi</b>, <b style="color:#b7791f">điều kiện</b> của mình và hướng đi em đang nghĩ tới.</p></div>
 </section>
 
 <!-- 6. HOLLAND -->
 <section class="slide">
   <span class="kicker">Hiểu mình • Sáu nhóm sở thích (Holland)</span>
-  <h2 style="font-size:44px">Em thuộc nhóm nào? <em>Ngành ví dụ</em></h2>
+  <h2 style="font-size:42px">Mã của em nói lên điều gì?</h2>
   <div class="hol">
-    <div><b style="background:#e8590c">R</b><h4>Kỹ thuật – Thực hành</h4><p>Cơ khí, điện, xây dựng, ô tô</p></div>
-    <div><b style="background:#2f6bff">I</b><h4>Nghiên cứu – Tìm tòi</h4><p>CNTT, y – dược, khoa học</p></div>
-    <div><b style="background:#c026d3">A</b><h4>Nghệ thuật – Sáng tạo</h4><p>Thiết kế, kiến trúc, truyền thông</p></div>
-    <div><b style="background:#16a34a">S</b><h4>Xã hội – Giúp đỡ</h4><p>Sư phạm, tâm lý, điều dưỡng</p></div>
-    <div><b style="background:#d98a0b">E</b><h4>Quản lý – Thuyết phục</h4><p>Kinh doanh, marketing, tài chính</p></div>
-    <div><b style="background:#0f766e">C</b><h4>Quy củ – Tỉ mỉ</h4><p>Kế toán, thống kê, hành chính</p></div>
+    <div><b style="background:#e8590c">R</b><h4>Kỹ thuật – Thực hành</h4><p><u>Thích:</u> làm bằng tay, sửa chữa, vận hành máy móc.<br><u>Ngành:</u> cơ khí, điện, xây dựng, ô tô.</p></div>
+    <div><b style="background:#2f6bff">I</b><h4>Nghiên cứu – Tìm tòi</h4><p><u>Thích:</u> hỏi “vì sao”, giải bài toán khó, phân tích.<br><u>Ngành:</u> CNTT, y – dược, khoa học.</p></div>
+    <div><b style="background:#c026d3">A</b><h4>Nghệ thuật – Sáng tạo</h4><p><u>Thích:</u> vẽ, viết, thiết kế, nghĩ ý tưởng mới.<br><u>Ngành:</u> thiết kế, kiến trúc, truyền thông.</p></div>
+    <div><b style="background:#16a34a">S</b><h4>Xã hội – Giúp đỡ</h4><p><u>Thích:</u> lắng nghe, hướng dẫn, giúp đỡ người khác.<br><u>Ngành:</u> sư phạm, tâm lý, điều dưỡng.</p></div>
+    <div><b style="background:#d98a0b">E</b><h4>Quản lý – Thuyết phục</h4><p><u>Thích:</u> dẫn dắt, tổ chức, thuyết phục, đặt mục tiêu.<br><u>Ngành:</u> kinh doanh, marketing, tài chính.</p></div>
+    <div><b style="background:#0f766e">C</b><h4>Quy củ – Tỉ mỉ</h4><p><u>Thích:</u> sắp xếp ngăn nắp, làm việc với số liệu, quy trình.<br><u>Ngành:</u> kế toán, thống kê, hành chính.</p></div>
   </div>
-  <p style="margin-top:14px;font-size:25px;font-weight:700;color:var(--mute)">Mỗi người thường là tổ hợp 2 – 3 nhóm. Mã chỉ cho biết em <u>thích gì</u> – còn phải xét thêm em <u>giỏi gì</u> và <u>điều kiện</u>.</p>
+  <p style="margin-top:12px;font-size:24px;font-weight:700;color:var(--mute);line-height:1.4">Mã Holland cho biết em <u>thích gì</u>. Để chọn ngành, em còn phải xét em <u>giỏi gì</u> và <u>điều kiện</u> của mình. Mỗi người thường có 2 – 3 nhóm nổi trội.</p>
 </section>
 
 <!-- 7. HIỂU ĐƯỜNG: NHIỆM VỤ -->
 <section class="slide" data-time="240">
   <span class="kicker">Hoạt động 2.2 • Hiểu đường • 10 phút</span>
-  <h2 style="font-size:48px">🧩 Mỗi nhóm <em>phụ trách một hướng đi</em></h2>
+  <h2 style="font-size:46px">🧩 Mỗi nhóm tìm hiểu <em>một hướng đi</em></h2>
   <div class="row" style="gap:16px;margin-top:10px">
     <div class="team t5" style="background:var(--blue)"><b>Nhóm 1</b><div>🎓 Đại học</div></div>
     <div class="team t5" style="background:var(--teal)"><b>Nhóm 2</b><div>🏫 Cao đẳng – Trung cấp – Học nghề</div></div>
     <div class="team t5" style="background:var(--violet)"><b>Nhóm 3</b><div>🌏 Du học</div></div>
     <div class="team t5" style="background:var(--coral)"><b>Nhóm 4</b><div>💼 Đi làm ngay – XKLĐ</div></div>
   </div>
-  <p style="margin:22px 0 10px;font-weight:900;font-size:34px">Điền <span style="color:var(--coral)">Phiếu 2 – phần A</span> (4 phút):</p>
-  <div class="crit5"><div><i>⏳</i>Bao lâu?</div><div><i>🚪</i>Vào bằng cách nào?</div><div><i>👤</i>Hợp với ai?</div><div><i>⚠️</i>Cần cân nhắc?</div></div>
-  <p style="margin-top:14px;font-size:24px;color:var(--mute)">Dùng Thẻ thông tin ở slide sau + hiểu biết của nhóm. Cử 1 bạn báo cáo (≤ 1 phút). Các nhóm khác ghi vào phần B.</p>
+  <p style="margin:20px 0 10px;font-weight:900;font-size:32px">Phiếu 2, phần A – nhóm trả lời 4 câu hỏi:</p>
+  <div class="crit5"><div><i>⏳</i>Học hoặc làm trong bao lâu?</div><div><i>🚪</i>Vào bằng cách nào?</div><div><i>👤</i>Hợp với người thế nào?</div><div><i>⚠️</i>Cần cân nhắc điều gì?</div></div>
+  <p style="margin-top:14px;font-size:24px;line-height:1.4">Nhóm thảo luận 4 phút rồi cử 1 bạn báo cáo trong 1 phút. Khi các nhóm khác báo cáo, mỗi em ghi ý chính vào bảng so sánh (phần B) trên phiếu.</p>
 </section>
 
 <!-- 8. THẺ THÔNG TIN -->
 <section class="slide">
   <span class="kicker">Hiểu đường • Thẻ thông tin</span>
-  <h2 style="font-size:44px">Bốn con đường – <em>bấm để xem</em></h2>
+  <h2 style="font-size:44px">Thông tin <em>bốn con đường</em></h2>
   <div class="tabs">
     <button class="tab on" data-p="0">🎓 Đại học</button><button class="tab" data-p="1">🏫 CĐ – TC – Nghề</button><button class="tab" data-p="2">🌏 Du học</button><button class="tab" data-p="3">💼 Đi làm – XKLĐ</button>
   </div>
@@ -316,15 +328,15 @@ td:last-child{border-radius:0 16px 16px 0}
 <!-- 10. TÌNH HUỐNG -->
 <section class="slide dark" data-time="240">
   <span class="kicker">Hoạt động 3 • Luyện tập • 10 phút</span>
-  <h2 style="font-size:46px">📮 <em>Tư vấn cho bạn</em> – bốc thăm tình huống</h2>
+  <h2 style="font-size:44px">📮 <em>Tư vấn cho bạn</em>: bốc thăm tình huống</h2>
   <div class="row fill" style="margin-top:4px;gap:30px">
     <div style="flex:.5;display:flex;flex-direction:column;justify-content:center">
-      <button class="env" data-s="0">✉️ Phiếu 1<small>Bấm để bốc thăm</small></button>
-      <button class="env" data-s="1">✉️ Phiếu 2<small>Bấm để bốc thăm</small></button>
-      <p class="hint">Mỗi nhóm bốc 1 phiếu – thảo luận 4 phút (phím T)</p>
+      <button class="env" data-s="0">✉️ Phiếu 1</button>
+      <button class="env" data-s="1">✉️ Phiếu 2</button>
+      <p style="font-size:22px;line-height:1.4;color:#e3d8ff">Mỗi nhóm bốc một phiếu, thảo luận 4 phút và ghi câu trả lời cho 4 câu hỏi.</p>
     </div>
     <div class="sit" id="sit" style="flex:1.6;color:var(--ink)">
-      <p style="font-size:28px;color:var(--mute);text-align:center">👈 Chọn một phiếu để mở tình huống</p>
+      <p style="font-size:28px;color:var(--mute);text-align:center">Đại diện nhóm bốc thăm một phiếu tình huống.</p>
     </div>
   </div>
 </section>
@@ -332,41 +344,41 @@ td:last-child{border-radius:0 16px 16px 0}
 <!-- 11. GỢI Ý -->
 <section class="slide">
   <span class="kicker">Luyện tập • Chốt</span>
-  <h2 style="font-size:44px">Gợi ý: luôn có <em>nhiều phương án</em></h2>
-  <p class="sub" style="font-size:23px">Nhóm trình bày xong, bấm vào thẻ để xem gợi ý.</p>
-  <div class="row" style="margin-top:4px">
-    <div class="card blur" style="border-top:8px solid var(--coral)"><h3>Linh – thiết kế hay kế toán?</h3><ul><li>Làm bộ sản phẩm, tìm hiểu việc làm ngành thiết kế.</li><li>Phương án gần: truyền thông, marketing; hoặc học kế toán và giữ thiết kế làm thế mạnh.</li><li>Trao đổi với bố mẹ bằng thông tin, không tranh cãi.</li></ul></div>
-    <div class="card blur" style="border-top:8px solid var(--teal)"><h3>Nam – CNTT, khó khăn kinh tế</h3><ul><li>Trường công lập học phí thấp, săn học bổng, vay tín dụng sinh viên.</li><li>Học cao đẳng CNTT rồi liên thông lên đại học.</li><li>Vừa học vừa làm; tự học trực tuyến miễn phí.</li></ul></div>
+  <h2 style="font-size:42px">Tình huống nào cũng có <em>nhiều phương án</em></h2>
+  <div class="row" style="margin-top:12px">
+    <div class="card blur" style="border-top:8px solid var(--coral)"><h3>Linh: thiết kế hay kế toán?</h3><ul><li>Thích và có khiếu thiết kế: nên làm bộ sản phẩm và tìm hiểu cơ hội việc làm của ngành.</li><li>Phương án gần: truyền thông, marketing; hoặc học kế toán và giữ thiết kế làm thế mạnh riêng.</li><li>Trao đổi với bố mẹ bằng thông tin và sản phẩm thật, không tranh cãi.</li></ul></div>
+    <div class="card blur" style="border-top:8px solid var(--teal)"><h3>Nam: CNTT và khó khăn kinh tế</h3><ul><li>Chọn trường công lập có học phí thấp, săn học bổng, vay tín dụng sinh viên.</li><li>Học cao đẳng CNTT rồi liên thông lên đại học.</li><li>Vừa học vừa làm bán thời gian; tự học trực tuyến miễn phí để có kỹ năng sớm.</li></ul></div>
   </div>
 </section>
 
 <!-- 12. KẾ HOẠCH -->
 <section class="slide" data-time="300">
   <span class="kicker">Hoạt động 4 • Vận dụng • 8 phút</span>
-  <h2 style="font-size:46px">📝 <em>Phiếu 3</em>: Kế hoạch 3 việc</h2>
-  <div class="formula f3">
-    <div style="background:var(--blue)"><b>Cụ thể</b><span>Làm việc gì?</span></div><u>+</u>
-    <div style="background:var(--teal)"><b>Có hạn chót</b><span>Làm khi nào?</span></div><u>+</u>
-    <div style="background:var(--coral)"><b>Kiểm tra được</b><span>Xong thì thấy gì?</span></div>
+  <h2 style="font-size:44px">📝 <em>Phiếu 3</em>: viết 3 việc em sẽ làm</h2>
+  <p class="sub" style="font-size:25px;margin-bottom:0">Một việc làm được khi nó đủ ba điều:</p>
+  <div class="formula f3" style="margin-top:12px">
+    <div style="background:var(--blue)"><b>Cụ thể</b><span>Nói rõ làm việc gì</span></div><u>+</u>
+    <div style="background:var(--teal)"><b>Có hạn chót</b><span>Nói rõ làm xong khi nào</span></div><u>+</u>
+    <div style="background:var(--coral)"><b>Kiểm tra được</b><span>Xong thì có kết quả nhìn thấy</span></div>
   </div>
-  <div class="row" style="margin-top:22px;gap:20px">
-    <div class="ex bad"><b>✘ Chưa tốt</b><p>“Cố gắng học giỏi hơn.”</p></div>
-    <div class="ex good"><b>✔ Tốt</b><p>“Đọc đề án tuyển sinh trường X, ghi 1 trang ghi chú – hạn 30/11.”</p></div>
+  <div class="row" style="margin-top:20px;gap:20px">
+    <div class="ex bad"><b>✘ Chưa tốt</b><p>“Cố gắng học giỏi hơn.”</p><small>Không rõ việc gì, không có hạn, không biết đã xong chưa.</small></div>
+    <div class="ex good"><b>✔ Tốt</b><p>“Đọc đề án tuyển sinh của trường X và ghi 1 trang tóm tắt – hạn 30/11.”</p><small>Rõ việc, có hạn, có sản phẩm kiểm tra được.</small></div>
   </div>
-  <p style="margin-top:18px;font-size:26px;font-weight:700">Viết xong → đổi phiếu với bạn cùng bàn, tích ✓ từng việc theo 3 tiêu chí. (Phím T)</p>
+  <p style="margin-top:16px;font-size:25px;line-height:1.4">Viết xong, em đổi phiếu với bạn cùng bàn. Bạn tích ✓ nếu việc đạt cả ba điều trên và góp ý nếu chưa đạt.</p>
 </section>
 
 <!-- 13. TỔNG KẾT -->
 <section class="slide dark">
-  <span class="kicker">Tổng kết & dặn dò</span>
-  <h2 style="font-size:46px">Bắt đầu từ <em>việc nhỏ hôm nay</em></h2>
+  <span class="kicker">Tổng kết và dặn dò</span>
+  <h2 style="font-size:44px">Bắt đầu từ <em>những việc nhỏ hôm nay</em></h2>
   <div class="row fill" style="margin-top:10px;gap:34px;align-items:center">
     <div>
-      <p style="font-size:30px;font-weight:800;color:var(--sun);line-height:1.4">“Chọn hướng đi không phải chọn một lần cho cả đời, mà là bắt đầu bằng những việc nhỏ làm được ngay từ hôm nay.”</p>
+      <p style="font-size:29px;font-weight:800;color:var(--sun);line-height:1.4">Chọn hướng đi không phải là chọn một lần cho cả đời. Đó là quá trình hiểu mình, hiểu đường và bắt đầu bằng những việc nhỏ làm được ngay.</p>
       <ul style="margin-top:20px">
-        <li>Dán Phiếu 3 ở góc học tập và làm đúng hạn.</li>
-        <li>Trao đổi với cha mẹ, thầy cô về Phiếu 1 và Phiếu 3.</li>
-        <li>Tiết sau: tìm hiểu <b>1 ngành, 1 trường</b> em đang cân nhắc.</li>
+        <li>Dán Phiếu 3 ở góc học tập và làm đúng hạn đã ghi.</li>
+        <li>Đưa Phiếu 1 và Phiếu 3 cho cha mẹ hoặc thầy cô xem và trao đổi.</li>
+        <li>Chuẩn bị cho tiết sau: tìm hiểu <b>một ngành và một trường</b> em đang cân nhắc (học phí, điểm chuẩn, cơ hội việc làm).</li>
       </ul>
     </div>
     <div class="photo" style="background-image:url('images/sv1.jpg')"></div>
@@ -400,6 +412,7 @@ tgo.onclick=toggleT;document.getElementById('trs').onclick=setupTimer;
 
 /* interactions */
 document.querySelectorAll('.flip').forEach(f=>f.onclick=()=>f.classList.toggle('on'));
+document.querySelectorAll('.rid .r').forEach(r=>r.onclick=()=>r.classList.toggle('on'));
 document.querySelectorAll('.sw').forEach(s=>s.onclick=()=>s.classList.toggle('on'));
 document.querySelectorAll('.blur').forEach(s=>s.onclick=()=>s.classList.toggle('on'));
 document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{const sec=t.closest('.slide');
